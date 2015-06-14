@@ -2,39 +2,45 @@
 	<head>
 		<title>Test Suite</title>
 		<script>
-			(function() {
+			(	function() {
 				var results;
+				console.log("results = " + results);
 				this.assert = function assert(value, desc) {
 					var li = document.createElement("li");
 					li.className = value ? "pass" : "fail";
 					li.appendChild(document.createTextNode(desc));
+					console.log("results = " + results);
 					results.appendChild(li);
 					if (!value) {
 						li.parentNode.parentNode.className = "fail";
 					}
 					return li;
-			};
-			this.test = function test(name, fn) {
-				results = document.getElementById("results");
-				results = assert(true, name).appendChild(
-					document.createElement("ul"));
-				fn();
-			};
-		})();
+				};
+				this.test = function test(name, fn) {
+					console.log("results = " + results);
+					results = document.getElementById("results");
+					console.log("results = " + results);
+					results = assert(true, name).appendChild(
+						document.createElement("ul"));
+					fn();
+				};
+			})();
 
-		window.onload = function() {
-			test("A test.", function() {
-				assert(true, "first assertion completed");
-				assert(true, "second assertion completed");
-				assert(true, "third assertion completed");
-		});
-		test("Another test.", function() {
-			assert(true, "First test completed");
-			assert(false, "second test failed");
-			assert(true, "Third assertion completed");
-		});
-	};
-	</script>
+			window.onload = function() {
+				console.log("onload");
+				test("A test.", function() {
+					console.log("results = " + results);
+					assert(true, "first assertion completed");
+					assert(true, "second assertion completed");
+					assert(true, "third assertion completed");
+				});
+				test("Another test.", function() {
+					assert(true, "First test completed");
+					assert(false, "second test failed");
+					assert(true, "Third assertion completed");
+				});
+			}	
+		</script>
 	<style>
 		#results li.pass { color: green; }
 		#results li.fail { color: red;   }

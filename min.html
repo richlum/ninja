@@ -1,0 +1,66 @@
+<html>
+	<head>
+	<script>
+		(	function () {
+			var functionscope = "function scope";
+			globalscope = "no var means globalscope";
+			//results2 = document.getElementById("results");
+			console.log("functionscope = " + functionscope);
+			console.log("globalscope = " + globalscope);
+			this.assert = function assert(value,desc) {
+				console.log("functionscope = " + functionscope);
+				console.log("globalscope = " + globalscope);
+				console.log("dynanimic global results = " + results2);
+				console.log("dynanimic local results = " + localresults2);
+				var li = document.createElement("li");
+				li.className = value ? "pass" : "fail";
+				li.appendChild(document.createTextNode(desc));
+				results2.appendChild(li);
+				if (!value) {
+					li.parentNode.parentNode.className = "fail";
+				}
+				console.log("asserting");
+				return li;
+			};
+			this.test = function test(name,fn) {
+				results2 = document.getElementById("results");
+				localresults2 = "localresults avail via closure";
+				console.log("results = " + results2);
+				results2 = assert(true,name).appendChild(
+					document.createElement("ul"));
+				console.log("results = " + results2);
+				fn();
+			};
+			//console.log("this is " + typeof(this) + ", name = " + this);
+			//for (elem in this){
+			//	console.log( elem + ", " + this[elem] );
+			//}
+		})();
+		console.log("line31");
+		results2 = document.getElementById("results");
+	    console.log("results = " + results2);
+		function isNimble(){ return true; }
+		window.onload = function() {	
+			console.log("onload function");
+			results2 = document.getElementById("results");
+			console.log("results = " + results2);
+			test("A test", function() {
+				results2 = document.getElementById("results");
+			    console.log("results = " + results2);
+				results2 = document.getElementById("results");
+				console.log("results = " + results2);
+				assert(typeof window.isNimble === "function", "isNimble() defined");
+				assert(isNimble.name === "isNimble", "isNImble() has a name");
+			});
+		};
+
+	</script>
+	<style>
+		#results li.pass { color: green; }
+		#results li.fail { color: red;   }
+	</style>
+	</head>
+	<body>
+		<ul id="results"></ul>
+	</body>
+</html>

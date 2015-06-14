@@ -1,0 +1,53 @@
+<html>
+	<head>
+	<script>
+		(	function myfunc() {
+			 	another = "testval";
+				console.log("this = " + this.name +
+							" typeof = " + typeof(this) );
+				for (elem in this){
+					console.log( elem + " : " + this[elem] );
+				}
+				this.assert = function assert(value,desc) {
+					console.log("results = " + results2);
+					var li = document.createElement("li");
+					li.className = value ? "pass" : "fail";
+					li.appendChild(document.createTextNode(desc));
+					results2.appendChild(li);
+					if (!value) {
+						li.parentNode.parentNode.className = "fail";
+					}
+					console.log("asserting");
+					return li;
+				};
+				this.test = function test(name,fn) {
+					results2 = document.getElementById("results");
+					console.log("results = " + results2);
+					results2 = assert(true,name).appendChild(
+						document.createElement("ul"));
+					console.log("results = " + results2);
+					fn();
+				};
+		})();
+		console.log("line31");
+		function isNimble(){ return true; }
+		window.onload = function() {	
+			console.log("onload function");
+			test("A test", function() {
+				console.log("results = " + another);
+				console.log("windows[another]=" + window[another]);
+				assert(typeof window.isNimble === "function", "isNimble() defined");
+				assert(isNimble.name === "isNimble", "isNImble() has a name");
+			});
+		};
+
+	</script>
+	<style>
+		#results li.pass { color: green; }
+		#results li.fail { color: red;   }
+	</style>
+	</head>
+	<body>
+		<ul id="results"></ul>
+	</body>
+</html>
