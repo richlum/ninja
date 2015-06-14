@@ -5,20 +5,21 @@ window.onload=function() {
 		li.appendChild(document.createTextNode(li.className));
 		base.appendChild(li);
 		color = "green";
-		var myFunc = outer().makefunc("arg1");
+		var myFunc = outer("arg1");
 		myFunc();
 };
 
-var outer = function () {
-	var color = "purple ";
+var outer = function (anarg) {
+	var color = "purple " + anarg;
 	return function makefunc(name) {
-		// name = "Mozilla";
+		 name = "Mozilla";
 		function displayName() {
 			//var color = "yellow ";
+			console.log(name+color);
 			alert(name + color);
 		}
 		return displayName;
-	};
+	}();
 };
 
 
