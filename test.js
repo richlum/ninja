@@ -10,7 +10,7 @@ window.onload=function() {
 		var myFunc = outer("arg1");
 		myFunc();
 		testNinja();
-		
+		showtype(this);
 };
 
 var outer = function (anarg) {
@@ -26,7 +26,6 @@ var outer = function (anarg) {
 	}();
 };
 
-var results;
 var getAssert = function() {
 	return function makeassert(){
 		function myassert (value, descr) {
@@ -47,37 +46,40 @@ function testNinja(){
 			}
 	};
 	console.log(ninja.chirp(4));
-	showtype(this,'object');  // 'function' 'object' 'undefined' 'string' 'number' 'null' 
+	//showtype(this,'string');  //  'function' 'object' 'undefined' 'string' 'number' 'null'  undefined===all
 	assert(ninja.chirp(2),"chirp-chirp");
 	var samarai = { chirp: ninja.chirp };
 
+	//this will steal ninja.chirp from samarai
 	//ninja = {};
 
 	try {
-		assert(samarai.chirps(4) = "chirp-chirp-chirp-chirp",
-			"Does this work?");
+		assert(samarai.chirp(4) == "chirp-chirp-chirp-chirp",
+			"This Does  work!!!");
 	}
 	catch(e) {
-			//assert(false,
-			//	"This doesnt work");
+			console.log(e);
+			assert(false,
+				"This doesnt work");
 	}
 };
 
 function showtype(that, what) {
 	var cnt = 0;
 	for (it in that){
-		//if  ((typeof that[it]) === what )  {
+		if ( (what == undefined) || ((typeof that[it]) === what ) )  {
 		console.log( cnt++ + " " + 
 						it + ":" + 
 						typeof that + ";" + 
 						typeof that[it] + " : " + 
 						that[it]);
-		//}
+		}
 	}
 };
 
 function assert (value, descr) {
 	var li = document.createElement("li");
+	var results = document.getElementById("basic");
 	li.className = value ? "pass" : "fail";
 	li.appendChild(document.createTextNode(descr));
 	console.log("results = " + results);
